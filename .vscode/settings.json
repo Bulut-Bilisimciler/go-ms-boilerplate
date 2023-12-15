@@ -13,7 +13,6 @@
 		}
 	},
 	"git.branchProtection": ["main", "master", "distro", "release/*"],
-	"git.branchProtectionPrompt": "alwaysCommitToNewBranch",
 	"git.branchRandomName.enable": true,
 	"git.mergeEditor": true,
 	"files.insertFinalNewline": true,
