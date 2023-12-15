@@ -1,0 +1,17 @@
+name: Basic Golang Test
+
+# on every master branch push
+on:
+  push:
+    branches:
+      - master
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: golang:1.21.5-alpine3.17
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run go test
+        run: go test -v ./...

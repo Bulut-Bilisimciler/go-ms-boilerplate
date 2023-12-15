@@ -1,0 +1,39 @@
+// Tasks is the list of tasks that can be run from the command palette (Ctrl+Shift+P, Run Task) and from the Run Task button.
+{
+	"version": "2.0.0",
+	"tasks": [
+		// example task for start go application
+		{
+			"label": "BB App: Start Go Application",
+			"type": "shell",
+			"command": "go run main.go",
+			"problemMatcher": [],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		// $HOME/go/bin/swag init
+		{
+			"label": "BB App: Generate Swagger",
+			"type": "shell",
+			"command": "$HOME/go/bin/swag init -o ./docs .",
+			"problemMatcher": [],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		// Test Go Application
+		{
+			"label": "BB App: Test Go Application",
+			"type": "shell",
+			"command": "go test -v ./...",
+			"problemMatcher": [],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+	]
+}

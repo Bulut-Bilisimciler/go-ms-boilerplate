@@ -1,0 +1,5 @@
+// go.work is a Go package that provides a simple interface to the work
+
+go 1.21.5
+
+use .

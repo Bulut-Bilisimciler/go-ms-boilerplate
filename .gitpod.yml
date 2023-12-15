@@ -1,0 +1,44 @@
+image:
+  file: .gitpod.Dockerfile
+ports:
+  - port: 8086
+    onOpen: open-browser
+tasks:
+  - init: |
+      go mod install
+    command: |
+      go build -o application .
+    name: run app
+  - command: |
+      go run main.go
+    name: run app
+    openMode: split-right
+github:
+  prebuilds:
+    branches: true
+    pullRequestsFromForks: true
+vscode:
+  extensions:
+    - dbaeumer.vscode-eslint
+		- mutantdino.resourcemonitor
+		- ms-vscode.go
+		- akamud.vscode-theme-onedark
+		- formulahendry.auto-rename-tag
+		- aaron-bond.better-comments
+		- anseki.vscode-color
+		- ms-azuretools.vscode-docker
+		- editorconfig.editorconfig
+		- mhutchie.git-graph
+		- donjayamanne.githistory
+		- eamodio.gitlens
+		- golang.go
+		- wix.vscode-import-cost
+		- oderwat.indent-rainbow
+		- ms-vscode.vscode-typescript-next
+		- mkloubert.vscode-kanban
+		- cweijan.vscode-mysql-client2
+		- esbenp.prettier-vscode
+		- rangav.vscode-thunder-client
+		- chakrounanas.turbo-console-log
+    - mtxr.sqltools
+    - mtxr.sqltools-driver-pg

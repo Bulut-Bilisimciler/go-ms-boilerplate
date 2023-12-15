@@ -1,0 +1,114 @@
+name: 'bb-microservice'
+version: '3.8'
+
+# services
+# - postgresql
+# - redis
+# - zookeeper
+# - kafka
+# - minio
+
+services:
+  # postgresql service
+  postgresqlapp:
+    image: postgres:14-alpine
+    networks:
+      - bbnet
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./volumes/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    restart: always
+    healthcheck:
+      test: pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"
+      interval: 10s
+      timeout: 2s
+      retries: 10
+  # redis service
+  redisapp:
+    image: redis:7.0-rc3-alpine3.15
+    networks:
+      - bbnet
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./volumes/redis:/data
+    environment:
+      - REDIS_PASSWORD=1020304050
+    restart: always
+    command: redis-server --requirepass 1020304050 --dir /data
+    healthcheck:
+      test: redis-cli -h "$$HOST" -p "$$PORT" ping
+      interval: 10s
+      timeout: 2s
+      retries: 10
+  # TODO: wurstmeister/zookeeper:latest deprecated. Use alternative
+  # zookeeper
+  zookeeperapp:
+    image: 'wurstmeister/zookeeper:latest'
+    ports:
+      - '2181:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    volumes:
+      - ./volumes/zookeeper:/var/lib/zookeeper/data
+  # TODO: wurstmeister/kafka:latest deprecated. Use alternative
+  # kafka
+  kafkaapp:
+    image: 'wurstmeister/kafka:latest'
+    ports:
+      - '9092:9092'
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeperapp:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      # auto create topic set true
+      - KAFKA_AUTO_CREATE_TOPICS_ENABLE=true
+    volumes:
+      - ./volumes/kafka:/var/lib/kafka/data
+    depends_on:
+      - zookeeperapp
+  # minio
+  minioapp:
+    image: minio/minio:RELEASE.2023-01-31T02-24-19Z
+    networks:
+      - bbnet
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ROOT_USER=minio123
+      - MINIO_ROOT_PASSWORD=minio123
+    restart: always
+    volumes:
+      - ./volumes/minio:/data
+    command: server /data --console-address ":9001"
+  # nats "docker pull nats:alpine3.18"
+  natsapp:
+    image: nats:alpine3.18
+    networks:
+      - bbnet
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+      - "6222:6222"
+    restart: always
+    healthcheck:
+      test: nats-ping -s nats://localhost:4222
+      interval: 10s
+      timeout: 2s
+      retries: 10
+
+
+# network: bbnet
+networks:
+  bbnet:
+    name: bbnet
+    driver: bridge

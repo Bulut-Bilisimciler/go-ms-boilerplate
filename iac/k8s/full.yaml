@@ -1,0 +1,3 @@
+# This is the kubernetes complete yaml file for this service.
+# This yaml includes deployment, service, ingress, configmap, secret and hpa.
+

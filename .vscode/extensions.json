@@ -1,0 +1,29 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=827846
+	// for the documentation about the extensions.json format
+	"recommendations": [
+		"dbaeumer.vscode-eslint",
+		"mutantdino.resourcemonitor",
+		"ms-vscode.go",
+		"akamud.vscode-theme-onedark",
+		"formulahendry.auto-rename-tag",
+		"aaron-bond.better-comments",
+		"anseki.vscode-color",
+		"ms-azuretools.vscode-docker",
+		"editorconfig.editorconfig",
+		"mhutchie.git-graph",
+		"donjayamanne.githistory",
+		"eamodio.gitlens",
+		"golang.go",
+		"wix.vscode-import-cost",
+		"oderwat.indent-rainbow",
+		"ms-vscode.vscode-typescript-next",
+		"mkloubert.vscode-kanban",
+		"cweijan.vscode-mysql-client2",
+		"esbenp.prettier-vscode",
+		"rangav.vscode-thunder-client",
+		"chakrounanas.turbo-console-log",
+		"mtxr.sqltools",
+		"mtxr.sqltools-driver-pg"
+	]
+}

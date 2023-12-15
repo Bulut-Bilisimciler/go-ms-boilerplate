@@ -1,0 +1,4 @@
+# ignore everything but no .gitignore and docs.go
+*
+!.gitignore
+!docs.go

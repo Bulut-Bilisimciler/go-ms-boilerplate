@@ -1,0 +1,25 @@
+# Task is golang library for running tasks in Go with Docker support.
+# https://taskfile.dev/installation/
+
+version: '3'
+
+tasks:
+  # task build
+  build:
+    desc: Build the app binary to .dist/application
+    prompt: "This commands build your project into single binary. Do you want to continue?"
+    cmds:
+      - go build -v -o .dist/application ./cmd/application
+  # task test
+  test:
+    desc: Run all the go tests.
+    cmds:
+      - go test -race ./...
+  # swag init
+  gen-swag-docs:
+    # for windows and linux different
+    desc: Generate swagger docs
+    cmds:
+      - $HOME/go/bin/swag init -o ./docs .
+
+

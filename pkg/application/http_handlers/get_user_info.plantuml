@@ -1,0 +1,4 @@
+Client->Server: HTTP GET me with JWT header
+Server->Server: JWT middleware
+Server->Server: HandleGetUserInformation: decode jwt claims
+Server->Client: decoded user info or error

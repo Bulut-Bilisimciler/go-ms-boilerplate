@@ -1,0 +1,24 @@
+ARG GO_VERSION=1.21.5
+ARG ALPINE_VERSION=3.17
+
+# build stage
+FROM golang:${GO_VERSION}-alpine${ALPINE_VERSION} AS build-env
+RUN apk add build-base
+
+ADD . /src
+
+RUN cd /src && go build -o application
+
+# final stage
+FROM alpine:${ALPINE_VERSION}
+
+WORKDIR /app
+
+COPY --from=build-env /src/main /app/
+
+# create user and give it permissions
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+RUN chown -R appuser:appgroup /app
+USER appuser
+
+ENTRYPOINT ./application
