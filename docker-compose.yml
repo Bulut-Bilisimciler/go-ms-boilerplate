@@ -105,6 +105,7 @@ services:
     command: server /data --console-address ":9001"
   # nats "docker pull nats:alpine3.18"
   natsapp:
+    container_name: natsapp
     image: nats:alpine3.18
     networks:
       - bbnet
