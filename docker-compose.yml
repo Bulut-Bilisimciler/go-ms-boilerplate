@@ -122,3 +122,6 @@ services:
 networks:
   bbnet:
     external: true
+    name: bbnet
+    # create if not exists
+
