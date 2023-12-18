@@ -6,7 +6,12 @@
 	"image": "mcr.microsoft.com/devcontainers/go:1.21-bookworm",
 	// "overrideCommand": false,
 	// "privileged": false,
-	// "postCreateCommand": "./.devcontainer/post-create.sh",
+
+	// create "bbnet" network if not exist
+	"initializeCommand": "docker network inspect bbnet >/dev/null 2>&1 || docker network create bbnet",
+	// add docker --network=bbnet to the run command
+	"runArgs": ["--network=bbnet"],
+	"postCreateCommand": "./.devcontainer/post-create.sh",
 	// "postCreateCommand": "go mod download",
 	"customizations": {
 		"vscode": {
