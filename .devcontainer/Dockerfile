@@ -6,12 +6,6 @@ ARG USERNAME=vscode
 ARG USER_UID=1000
 ARG USER_GID=1000
 
-# set default ENV values (like timezone/etc etc.)
-ENV TZ=UTC \
-	DEBIAN_FRONTEND=noninteractive \
-	LANG=en_US.UTF-8 \
-	LC_ALL=C.UTF-8
-
 # Setup user
 RUN adduser $USERNAME -s /bin/sh -D -u $USER_UID $USER_GID && \
     mkdir -p /etc/sudoers.d && \
@@ -20,12 +14,15 @@ RUN adduser $USERNAME -s /bin/sh -D -u $USER_UID $USER_GID && \
 
 # Install packages and Go language server
 RUN apk add -q --update --progress --no-cache git sudo openssh-client zsh
-RUN go get -u -v golang.org/x/tools/cmd/gopls 2>&1
+# RUN go get -u -v golang.org/x/tools/cmd/gopls 2>&1
 
-# install golang task runner
-RUN go get -u -v github.com/go-task/task/cmd/task 2>&1
-
-# install golang mage tool
-RUN go get -u -v github.com/magefile/mage 2>&1
-
+# Setup shell
+USER $USERNAME
+RUN sh -c "$(wget -O- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended &> /dev/null
+ENV ENV="/home/$USERNAME/.ashrc" \
+    ZSH=/home/$USERNAME/.oh-my-zsh \
+    EDITOR=vi \
+    LANG=en_US.UTF-8
+RUN printf 'ZSH_THEME="robbyrussell"\nENABLE_CORRECTION="false"\nplugins=(git copyfile extract colorize dotenv encode64 golang)\nsource $ZSH/oh-my-zsh.sh' > "/home/$USERNAME/.zshrc"
+RUN echo "exec `which zsh`" > "/home/$USERNAME/.ashrc"
 USER root

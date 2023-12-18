@@ -1,11 +1,13 @@
 {
 	"name": "BB - Go Gin Microservice Boilerplate",
-	"build": {
-		"dockerfile": "Dockerfile"
-	},
-	"overrideCommand": false,
-	"privileged": false,
-	"postCreateCommand": "./.devcontainer/post-create.sh",
+	// "build": {
+	// 	"dockerfile": "Dockerfile"
+	// },
+	"image": "mcr.microsoft.com/devcontainers/go:1.21-bookworm",
+	// "overrideCommand": false,
+	// "privileged": false,
+	// "postCreateCommand": "./.devcontainer/post-create.sh",
+	// "postCreateCommand": "go mod download",
 	"customizations": {
 		"vscode": {
 			"settings": {
@@ -46,7 +48,20 @@
 			"onAutoForward": "silent"
 		}
 	},
+	// "mounts": [
+	// 	"source=${localWorkspaceFolder}/,target=/workspace,type=bind,consistency=cached"
+	// ],
 	"hostRequirements": {
-		"memory": "2gb"
-	}
+		"memory": "6gb"
+	},
+	// "runArgs": [
+	// 	"-u",
+	// 	"vscode",
+	// 	"--cap-add=SYS_PTRACE",
+	// 	"--security-opt",
+	// 	"seccomp=unconfined",
+	// 	// map SSH keys for Git
+	// 	"-v",
+	// 	"${env:HOME}/.ssh:/home/vscode/.ssh:ro"
+	// ]
 }
