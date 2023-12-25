@@ -1,5 +1,5 @@
 # You can find the new timestamped tags here: https://hub.docker.com/r/gitpod/workspace-base/tags
-FROM gitpod/workspace-base:latest
+FROM gitpod/workspace-base:2023-12-21-11-39-51
 
 # Change your version here
 ENV GO_VERSION=1.21.5
@@ -13,5 +13,3 @@ RUN curl -fsSL https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz | tar
 	'export PATH=$GOPATH/bin:$PATH' > $HOME/.bashrc.d/300-go
 
 USER gitpod
-
-RUN sudo apt-get install go-dep
